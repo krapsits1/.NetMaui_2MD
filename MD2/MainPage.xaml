@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:ConsoleApp2.Projekts.Models"
+             x:Class="MD2.MainPage"
+             Title="MD2 Emīls Vētra">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="10">
+
+            <Label
+                Text="Data Overview"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <!-- Teachers Sekcija -->
+            <Label Text="Teachers:" FontAttributes="Bold" FontSize="16" />
+
+            <CollectionView x:Name="TeachersCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Name: " FontAttributes="Bold" TextColor="Blue" />
+                                    <Span Text="{Binding Name}" TextColor="Black" />
+
+                                    <Span Text="  Surname: " FontAttributes="Bold" TextColor="Green" />
+                                    <Span Text="{Binding Surname}" TextColor="Black" />
+
+                                    <Span Text="  Fullname: " FontAttributes="Bold" TextColor="Purple" />
+                                    <Span Text="{Binding FullName}" TextColor="Black" />
+
+                                    <Span Text="  Gender: " FontAttributes="Bold" TextColor="Teal" />
+                                    <Span Text="{Binding GenderType}" TextColor="Black" />
+
+                   
+                                    <Span Text="  Contract Date: " FontAttributes="Bold" TextColor="DarkOrange" />
+                                    <Span Text="{Binding ContractDate, StringFormat='{0:MM/dd/yyyy}'}" TextColor="Black" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <!-- Students Sekcija -->
+            <Label Text="Students:" FontAttributes="Bold" FontSize="16"/>
+
+            <CollectionView x:Name="StudentsCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Name: " FontAttributes="Bold" TextColor="Blue" />
+                                    <Span Text="{Binding Name}" TextColor="Black" />
+
+                                    <Span Text="  Surname: " FontAttributes="Bold" TextColor="Green" />
+                                    <Span Text="{Binding Surname}" TextColor="Black" />
+
+                                    <Span Text="  Fullname: " FontAttributes="Bold" TextColor="Purple" />
+                                    <Span Text="{Binding FullName}" TextColor="Black" />
+
+                                    <Span Text="  Student ID: " FontAttributes="Bold" TextColor="DarkRed" />
+                                    <Span Text="{Binding StudentIdNumber}" TextColor="Black" />
+
+                                    <Span Text="  Gender: " FontAttributes="Bold" TextColor="Teal" />
+                                    <Span Text="{Binding GenderType}" TextColor="Black" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Courses Sekcija -->
+            <Label Text="Courses:" FontAttributes="Bold" FontSize="16" />
+
+            <CollectionView x:Name="CoursesCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Course Name: " FontAttributes="Bold" TextColor="Navy" />
+                                    <Span Text="{Binding Name}" TextColor="Black" />
+
+                                    <Span Text="  Teacher: " FontAttributes="Bold" TextColor="DarkOliveGreen" />
+                                    <Span Text="{Binding Teacher.Name}" TextColor="Black" />
+
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Assignments Sekcija -->
+            <Label Text="Assignments:" FontAttributes="Bold" FontSize="16" />
+
+            <CollectionView x:Name="AssignmentsCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Padding="8">
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label HorizontalOptions="StartAndExpand">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Description: " FontAttributes="Bold" TextColor="DarkRed" />
+                                            <Span Text="{Binding Description}" TextColor="Black" />
+
+                                            <Span Text="  Deadline: " FontAttributes="Bold" TextColor="Maroon" />
+                                            <Span Text="{Binding DeadLine}" TextColor="Black" />
+
+                                            <Span Text="  Course: " FontAttributes="Bold" TextColor="DarkSlateBlue" />
+                                            <Span Text="{Binding Course.Name}" TextColor="Black" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!-- Edit Button -->
+                                <Button Text="Edit"
+                                    Margin="3"
+                                    BackgroundColor="LightBlue"
+
+                                    TextColor="Black"
+                                    HorizontalOptions="End"
+                                    Clicked="OnEditAssignmentClicked"
+                                    CommandParameter="{Binding .}" />
+
+                                <Button Text="Delete"
+                                    Margin="3"
+                                    BackgroundColor="IndianRed"
+
+                                    TextColor="Black"
+                                    HorizontalOptions="End" 
+                                    Clicked="OnDeleteAssignmentClicked"
+                                    CommandParameter="{Binding .}" />
+                            </StackLayout>
+
+                            <StackLayout IsVisible="{Binding IsEditing}" Margin="5">
+                                <Entry x:Name="EditDescriptionEntry" Placeholder="Edit Description" Text="{Binding Description}" Margin="5"/>
+                                <DatePicker  x:Name="EditDeadlinePicker" Date="{Binding DeadLineDateTime}" Margin="5" />
+
+                                <Button Text="Save" Margin="5"
+                                    Clicked="OnSaveAssignmentClicked"
+                                    BackgroundColor="LightGreen"
+                                    TextColor="Black"
+                                    CommandParameter="{Binding .}" />
+                            </StackLayout>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Submissions Sekcija -->
+            <Label Text="Submissions:" FontAttributes="Bold" FontSize="16" />
+
+            <CollectionView x:Name="SubmissionsCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" Padding="5">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label HorizontalOptions="StartAndExpand">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Assignment: " FontAttributes="Bold" TextColor="DarkOrange" />
+                                            <Span Text="{Binding Assignement.Description}" TextColor="Black" />
+
+                                            <Span Text="  Student: " FontAttributes="Bold" TextColor="DarkCyan" />
+                                            <Span Text="{Binding Student.FullName}" TextColor="Black" />
+
+                                            <Span Text="  Submitted On: " FontAttributes="Bold" TextColor="Teal" />
+                                            <Span Text="{Binding SubmissionTime, StringFormat='{0:MM/dd/yyyy HH:mm}'}" TextColor="Black" />
+
+                                            <Span Text="  Score: " FontAttributes="Bold" TextColor="DarkGreen" />
+                                            <Span Text="{Binding Score}" TextColor="Black" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <BoxView HorizontalOptions="Fill" />
+                                
+                                  <!--Sumbission edit-->
+                                <Button Text="Edit"
+                                    Margin="3"
+                                    BackgroundColor="LightBlue"
+                                    TextColor="Black"
+                                    Clicked="OnEditSubmissionClicked"
+                                    CommandParameter="{Binding .}" />
+                                
+                                <!--Sumbission dzēst-->
+
+                                <Button Text="Delete"
+                                    Margin="3"
+                                    BackgroundColor="IndianRed"
+                                    TextColor="Black"
+                                    Clicked="OnDeleteSubmissionClicked"
+                                    CommandParameter="{Binding .}" />
+                            </StackLayout>
+
+                            <StackLayout IsVisible="{Binding IsEditing}" Margin="5">
+                                <Entry x:Name="EditSubmissionDescriptionEntry" 
+                                    Placeholder="Edit Submission Description" 
+                                    Text="{Binding Description}" 
+                                    Margin="5"/>
+
+                                <DatePicker x:Name="EditSubmissionDatePicker" 
+                                    Date="{Binding SubmissionDate}" 
+                                    Margin="5" />
+                                <!--Sumbission save-->
+
+                                <Button Text="Save" 
+                                    Margin="5"
+                                    Clicked="OnSaveSubmissionClicked" 
+                                    BackgroundColor="LightGreen" 
+                                    TextColor="Black" 
+                                    CommandParameter="{Binding .}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
+            <!--Create Test Data Iespēja-->
+            <Button x:Name="CreateTestDataButton" 
+                Text="Create Test Data" 
+                Clicked="CreateTestDataBtn" 
+                BackgroundColor="LightBlue" 
+                TextColor="Black" 
+                CornerRadius="5" />
+
+            <!--Ielādēt datus no faia iespēja-->
+            <Button x:Name="LoadDataButton"
+                Text="Load Data from File"
+                Clicked="OnLoadDataButtonClicked"
+                BackgroundColor="LightGreen"
+                TextColor="Black"
+                CornerRadius="5" />
+
+            <!--Ielādēt datus uz failu iespēja-->
+            <Button x:Name="SaveDataButton"
+                Text="Save Data to File"
+                Clicked="OnSaveDataButtonClicked"
+                BackgroundColor="LightBlue"
+                TextColor="Black"
+                CornerRadius="5" />
+
+            <StackLayout>
+                <!-- Add Student Section -->
+                <Label Text="Add Student" FontAttributes="Bold" FontSize="16" Margin="8" />
+                <Entry x:Name="StudentNameEntry" Placeholder="Student Name" Margin="8" />
+                <Entry x:Name="StudentSurnameEntry" Placeholder="Student Surname" Margin="8" />
+                <Picker x:Name="StudentGenderPicker" Title="Select Gender" Margin="8">
+                    <Picker.Items>
+                        <x:String>Man</x:String>
+                        <x:String>Woman</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Entry x:Name="StudentIdEntry" Placeholder="Student ID" Margin="8" />
+                <Button Text="Create Student" Clicked="OnCreateStudentClicked" Margin="8" BackgroundColor="LightGreen" TextColor="Black"/>
+
+                <!-- Add Assignment Section -->
+                <Label Text="Add Assignment" FontAttributes="Bold" FontSize="16" Margin="8" />
+                <Entry x:Name="AssignmentDescriptionEntry" Placeholder="Assignment Description" Margin="8"/>
+                <DatePicker x:Name="AssignmentDeadlinePicker" Margin="8"/>
+                <Picker x:Name="CoursePicker" Title="Select Course" Margin="8"/>
+                <Button Text="Create Assignment" Clicked="OnCreateAssignmentClicked" Margin="8" BackgroundColor="LightGreen" TextColor="Black" />
+
+                <!-- Add Submission Section -->
+                <Label Text="Add Submission" FontAttributes="Bold" FontSize="16" Margin="8" />
+                <Picker x:Name="SubmissionAssignmentPicker" Title="Select Assignment" Margin="8"/>
+                <Picker x:Name="SubmissionStudentPicker" Title="Select Student" Margin="8"/>
+                <DatePicker x:Name="SubmissionDatePicker" Margin="8"/>
+                <Entry x:Name="SubmissionScoreEntry" Placeholder="Score" Margin="8"/>
+                <Button Text="Create Submission" Clicked="OnCreateSubmissionClicked" Margin="8" BackgroundColor="LightGreen" TextColor="Black" />
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
